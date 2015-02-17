@@ -14,6 +14,12 @@
 
 #include <stdint.h>
 
+#ifdef __IAR_SYSTEMS_ICC__
+#define _PRAGMA(x) _Pragma(#x)
+#define _PRAGMA_SAVE _PRAGMA(language=save)
+#define _PRAGMA_RESOTRE _PRAGMA(language=restore)
+#endif /*__IAR_SYSTEMS_ICC__*/
+
 /* In watchdog mode, our WDT can't be stopped once started
  * Include watchdog_stop()'s declaration and then trash it */
 #include "dev/watchdog.h"
@@ -28,7 +34,7 @@
  * lint - style defines to help syntax parsers with sdcc-specific 8051 code
  * They don't interfere with actual compilation
  */
-#if !defined(__SDCC_mcs51) && !defined(SDCC_mcs51)
+#if !defined(__SDCC_mcs51) && !defined(SDCC_mcs51) && !defined(__IAR_SYSTEMS_ICC__)
 #define __data
 #define __xdata
 #define __code
@@ -68,7 +74,7 @@
  *
  * More information on the wiki
  */
-#define CC_CONF_OPTIMIZE_STACK_SIZE 0
+#define CC_CONF_OPTIMIZE_STACK_SIZE 1
 
 #if CC_CONF_OPTIMIZE_STACK_SIZE
 #define CC_AT_DATA

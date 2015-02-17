@@ -9,8 +9,8 @@
 #include "contiki-conf.h"
 #include "dev/io-arch.h"
 /*---------------------------------------------------------------------------*/
-void
-putchar(char c)
+int
+putchar(int c)
 {
 #if SLIP_ARCH_CONF_ENABLE
 #define SLIP_END     0300
@@ -35,4 +35,5 @@ putchar(char c)
     debug_frame = 0;
   }
 #endif
+  return c;
 }

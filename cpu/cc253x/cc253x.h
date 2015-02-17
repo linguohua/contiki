@@ -45,6 +45,17 @@
 #ifndef CC253X_H_
 #define CC253X_H_
 
+#ifdef __IAR_SYSTEMS_ICC__
+#include <iocc2530.h>
+
+/*---------------------------------------------------------------------------
+ * Information Page (Read Only)
+ *---------------------------------------------------------------------------*/
+
+#define X_INFOPAGE XREG(0x7800) /* Start of Information Page */
+#define X_IEEE_ADDR XREG(0x780C) /* Start of unique IEEE Address */
+
+#else
 /*---------------------------------------------------------------------------*/
 /* Compiler Abstraction */
 #include <compiler.h>
@@ -670,4 +681,5 @@ SFRX(X_P2DIR,     0x70FF); /* Port 2 direction */
 SFRX(X_INFOPAGE,  0x7800); /* Start of Information Page */
 SFRX(X_IEEE_ADDR, 0x780C); /* Start of unique IEEE Address */
 
+#endif /*__IAR_SYSTEMS_ICC__*/
 #endif /* CC253X_H_ */

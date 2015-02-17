@@ -75,7 +75,7 @@ rtimer_arch_init(void)
   T1CCTL1 = T1CCTL_MODE | T1CCTL_IM;
 
   /* Interrupt Mask Flags: No interrupt on overflow */
-  OVFIM = 0;
+  T1OVFIM = 0;
 
   /* Acknowledge Timer 1 Interrupts */
   T1IE = 1;
@@ -97,12 +97,13 @@ rtimer_arch_schedule(rtimer_clock_t t)
 }
 /*---------------------------------------------------------------------------*/
 /* avoid referencing bits, we don't call code which use them */
-#pragma save
+#pragma language=save
 #if CC_CONF_OPTIMIZE_STACK_SIZE
 #pragma exclude bits
 #endif
-void
-rtimer_isr(void) __interrupt(T1_VECTOR)
+//void
+//rtimer_isr(void) __interrupt(T1_VECTOR)
+_PRAGMA(vector=T1_VECTOR) __near_func __interrupt void rtimer_isr(void)
 {
   T1IE = 0; /* Ignore Timer 1 Interrupts */
   ENERGEST_ON(ENERGEST_TYPE_IRQ);
@@ -116,4 +117,4 @@ rtimer_isr(void) __interrupt(T1_VECTOR)
   ENERGEST_OFF(ENERGEST_TYPE_IRQ);
   T1IE = 1; /* Acknowledge Timer 1 Interrupts */
 }
-#pragma restore
+#pragma language=restore

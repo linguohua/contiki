@@ -38,7 +38,7 @@
  *         Philippe Retornaz (EPFL)
  */
 #include "contiki.h"
-
+#if STACK_CONF_DEBUGGING
 #ifndef STACK_POISON
 #define STACK_POISON 0xAA
 #endif
@@ -69,3 +69,4 @@ stack_get_max(void)
 
   return 0xff - free;
 }
+#endif /*STACK_CONF_DEBUGGING*/

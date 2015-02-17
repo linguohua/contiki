@@ -52,7 +52,7 @@ volatile uint8_t sleep_flag;
 #endif
 /*---------------------------------------------------------------------------*/
 /* Do NOT remove the absolute address and do NOT remove the initialiser here */
-__xdata __at(0x0000) static unsigned long timer_value = 0;
+__xdata __no_init static unsigned long timer_value @(0x0000) ;
 
 static volatile CC_AT_DATA clock_time_t count = 0; /* Uptime in ticks */
 static volatile CC_AT_DATA clock_time_t seconds = 0; /* Uptime in secs */
@@ -132,12 +132,14 @@ clock_init(void)
 }
 /*---------------------------------------------------------------------------*/
 /* avoid referencing bits, we don't call code which use them */
-#pragma save
+#pragma language=save
 #if CC_CONF_OPTIMIZE_STACK_SIZE
 #pragma exclude bits
 #endif
-void
-clock_isr(void) __interrupt(ST_VECTOR)
+//void
+//clock_isr(void) __interrupt(ST_VECTOR)
+_PRAGMA(vector=ST_VECTOR) __near_func __interrupt
+void clock_isr(void)
 {
   DISABLE_INTERRUPTS();
   ENERGEST_ON(ENERGEST_TYPE_IRQ);
@@ -181,5 +183,5 @@ clock_isr(void) __interrupt(ST_VECTOR)
   ENERGEST_OFF(ENERGEST_TYPE_IRQ);
   ENABLE_INTERRUPTS();
 }
-#pragma restore
+#pragma language=restore
 /*---------------------------------------------------------------------------*/

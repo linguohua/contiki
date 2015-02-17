@@ -17,7 +17,7 @@
 
 #if DMA_ON
 extern struct process *dma_callback[DMA_CHANNEL_COUNT];
-#endif
+
 
 /*---------------------------------------------------------------------------*/
 #ifdef HAVE_RF_DMA
@@ -72,3 +72,4 @@ dma_isr(void) __interrupt(DMA_VECTOR)
 }
 #pragma restore
 /*---------------------------------------------------------------------------*/
+#endif /*DMA_ON*/

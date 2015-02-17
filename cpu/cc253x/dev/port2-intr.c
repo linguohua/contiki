@@ -31,6 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "cc253x.h"
 #include "port2.h"
 
+#if PORT_2_ISR_ENABLED
 extern struct cc253x_p2_handler *handlers;
 
 /* avoid referencing bits, we don't call code which use them */
@@ -53,3 +54,4 @@ port_2_isr(void) __interrupt(P2INT_VECTOR)
   }
 }
 #pragma restore
+#endif /*PORT_2_ISR_ENABLED*/

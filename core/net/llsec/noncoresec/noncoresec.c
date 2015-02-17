@@ -128,7 +128,7 @@ on_frame_created(void)
 static void
 input(void)
 {
-  uint8_t generated_mic[LLSEC802154_MIC_LENGTH];
+  uint8_t generated_mic[LLSEC802154_MIC_LENGTH+1];
   uint8_t *received_mic;
   const linkaddr_t *sender;
   struct anti_replay_info* info;
